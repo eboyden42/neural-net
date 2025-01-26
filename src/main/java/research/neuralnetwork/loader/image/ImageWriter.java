@@ -70,7 +70,7 @@ public class ImageWriter {
 		
 		NeuralNetwork nn = NeuralNetwork.load("mnistNeural45.ntw");
 		
-		boolean createIndividualImages = true;
+		boolean createIndividualImages = false;
 		
 		int imageWidth = metaData.getWidth();
 		int imageHeight = metaData.getHeight();
@@ -93,7 +93,7 @@ public class ImageWriter {
 			int canvasWidth = horizontalImages * imageWidth;
 			int canvasHeight = verticalImages * imageHeight;
 			
-			String montagePath = String.format("monage%d.jpg", i);
+			String montagePath = String.format("montage%d.jpg", i);
 			System.out.println("Writing "+montagePath);
 			
 			var montage = new BufferedImage(canvasWidth, canvasHeight, BufferedImage.TYPE_INT_RGB);
@@ -119,7 +119,7 @@ public class ImageWriter {
 				
 				correct[n] = predicted == actual;
 				
-				if (correct[n] == false && createIndividualImages == true) {
+				if (!correct[n] && createIndividualImages) {
 					var image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);
 					for (int index = 0; index < imageSize; index ++) {
 						int pixelRow = index/imageWidth;
