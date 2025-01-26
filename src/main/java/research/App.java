@@ -3,6 +3,7 @@ package research;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 import research.neuralnetwork.NeuralNetwork;
 import research.neuralnetwork.Transform;
@@ -16,7 +17,7 @@ public class App {
 
 	public static void main(String[] args) {
 		
-		final String filename = String.format("mnistNeural36x16.ntw");
+		final String filename = String.format("test.ntw");
 
 		String directory = "MNISTdata/MNIST";
 		if (args.length > 0) {
@@ -64,13 +65,27 @@ public class App {
 			neuralNetwork.setThreads(numberOfThreads);
 			neuralNetwork.setScaleInitalWeights(scaleInitialWeights);
 
-			//NETWORK ARCHITECTURE SETTINGS
-			neuralNetwork.add(Transform.DENSE, 36, inputSize);
-			neuralNetwork.add(Transform.RELU);
-			neuralNetwork.add(Transform.DENSE, 16);
-			neuralNetwork.add(Transform.RELU);
-			neuralNetwork.add(Transform.DENSE, outputSize);
-			neuralNetwork.add(Transform.SOFTMAX);
+			//NETWORK ARCHITECTURE SETTINGS - determined dynamically upon program run
+
+			Scanner scan = new Scanner(System.in);
+			String line = "";
+			System.out.println("Do you want to use a default network architecture? (Y/N)");
+			line = scan.nextLine();
+			while(!line.equals("Y") && !line.equals("N")) {
+				System.out.println("Must enter Y or N. Do you want to use a default network architecture?");
+				line = scan.nextLine();
+			}
+			if (line.equals("Y")) {
+				neuralNetwork.add(Transform.DENSE, 36, inputSize);
+				neuralNetwork.add(Transform.RELU);
+				neuralNetwork.add(Transform.DENSE, 16);
+				neuralNetwork.add(Transform.RELU);
+				neuralNetwork.add(Transform.DENSE, outputSize);
+				neuralNetwork.add(Transform.SOFTMAX);
+			}
+			else {
+				//not implemented for now
+			}
 					
 		}
 		else {
