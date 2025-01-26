@@ -3,9 +3,12 @@
 ## Author
 Eli Boyden, aqu4eb, eboyden42
 
+Complete while following course "Create a Neural Network in Java" by John Purcell
+
 
 ## To Run
 
-Getting there... I need to figure out some stuff first
+1) Clone the repositiory and navigate to App.java
+2) 
 
 ## Issues

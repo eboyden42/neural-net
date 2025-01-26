@@ -50,16 +50,21 @@ public class App {
 				
 		if (neuralNetwork == null) {
 			System.out.println("Unable to load network from save, Creating from scratch...");
-					
+
+			//TRAINING SETTINGS
 			int epochNumber = 100;
-					
+			double initialLearningRate = 0.02;
+			double finalLearningRate = 0.01;
+			int numberOfThreads = 12; //you may want to change this based on your computer (so the network trains faster), nothing will break if you don't
+			final double scaleInitialWeights = 0.2; //DO NOT CHANGE THIS UNLESS YOU KNOW WHAT YOU'RE DOING
+
 			neuralNetwork = new NeuralNetwork();
-			
 			neuralNetwork.setEpochs(epochNumber);
-			neuralNetwork.setLearningRates(0.02, 0.01);
-			neuralNetwork.setThreads(12);
-			neuralNetwork.setScaleInitalWeights(0.2);
-			
+			neuralNetwork.setLearningRates(initialLearningRate, finalLearningRate);
+			neuralNetwork.setThreads(numberOfThreads);
+			neuralNetwork.setScaleInitalWeights(scaleInitialWeights);
+
+			//NETWORK ARCHITECTURE SETTINGS
 			neuralNetwork.add(Transform.DENSE, 36, inputSize);
 			neuralNetwork.add(Transform.RELU);
 			neuralNetwork.add(Transform.DENSE, 16);
