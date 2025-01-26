@@ -52,7 +52,7 @@ public class App {
 		if (neuralNetwork == null) {
 			System.out.println("Unable to load network from save, Creating from scratch...");
 
-			//TRAINING SETTINGS
+			//TRAINING SETTINGS - settings are set to default values but can be changed manually
 			int epochNumber = 100;
 			double initialLearningRate = 0.02;
 			double finalLearningRate = 0.01;
@@ -66,7 +66,6 @@ public class App {
 			neuralNetwork.setScaleInitalWeights(scaleInitialWeights);
 
 			//NETWORK ARCHITECTURE SETTINGS - determined dynamically upon program run
-
 			Scanner scan = new Scanner(System.in);
 			String line = "";
 			System.out.println("Do you want to use a default network architecture? (Y/N)");
@@ -84,7 +83,39 @@ public class App {
 				neuralNetwork.add(Transform.SOFTMAX);
 			}
 			else {
-				//not implemented for now
+				System.out.println("Enter the number of layers you would like in your network (typically 1-5):");
+				line = scan.nextLine();
+				while(!isInteger(line)) {
+					System.out.println("Must enter an integer.");
+					line = scan.nextLine();
+				}
+				int numberOfLayers = Integer.parseInt(line);
+
+				System.out.println("Enter the number of nodes you would like in layer 1. (typically 5-300, descending with each layer):");
+				line = scan.nextLine();
+				while(!isInteger(line)) {
+					System.out.println("Must enter an integer.");
+					line = scan.nextLine();
+				}
+				int nodes = Integer.parseInt(line);
+				neuralNetwork.add(Transform.DENSE, nodes, inputSize);
+				neuralNetwork.add(Transform.RELU);
+
+				for (int i = 1; i < numberOfLayers; i ++) {
+					System.out.printf("Enter the number of nodes you would like in layer %d. (typically 5-300, descending with each layer):\n", i+1);
+					line = scan.nextLine();
+					while(!isInteger(line)) {
+						System.out.println("Must enter an integer.");
+						line = scan.nextLine();
+					}
+					nodes = Integer.parseInt(line);
+					neuralNetwork.add(Transform.DENSE, nodes);
+					neuralNetwork.add(Transform.RELU);
+				}
+
+				//append output layer
+				neuralNetwork.add(Transform.DENSE, outputSize);
+				neuralNetwork.add(Transform.SOFTMAX);
 			}
 					
 		}
@@ -113,4 +144,12 @@ public class App {
 		**/
 	}
 
+	public static boolean isInteger(String input) {
+		try {
+			Integer.parseInt(input);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
 }
