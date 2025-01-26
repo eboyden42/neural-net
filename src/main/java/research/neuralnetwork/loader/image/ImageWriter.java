@@ -70,7 +70,7 @@ public class ImageWriter {
 		
 		NeuralNetwork nn = NeuralNetwork.load("mnistNeural45.ntw");
 		
-		boolean createIndividualImages = false;
+		boolean createIndividualImages = false; //please keep this false it will create TONS of little jpgs if it is set to true
 		
 		int imageWidth = metaData.getWidth();
 		int imageHeight = metaData.getHeight();
@@ -202,7 +202,6 @@ public class ImageWriter {
 				fw.write(sb.toString());
 				fw.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
