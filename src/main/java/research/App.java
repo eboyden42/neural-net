@@ -17,13 +17,11 @@ public class App {
 	public static void main(String[] args) {
 		
 		final String filename = String.format("mnistNeural36x16.ntw");
-		
-		if (args.length == 0) {
-			System.out.println("usage: [app] <MNIST DATA DIRECTORY>");
-			return;
-		}
 
-		String directory = args[0];
+		String directory = "MNISTdata/MNIST";
+		if (args.length > 0) {
+			directory = args[0];
+		}
 		
 		if (!new File(directory).isDirectory()) {
 			System.out.println("'"+directory+"'"+" is not a directory");
