@@ -1,5 +1,6 @@
 package research;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,13 +12,12 @@ import research.neuralnetwork.loader.BatchData;
 import research.neuralnetwork.loader.Loader;
 import research.neuralnetwork.loader.MetaData;
 import research.neuralnetwork.loader.image.ImageLoader;
+import research.neuralnetwork.loader.image.ImageWriter;
 import research.neuralnetwork.loader.test.TestLoader;
 
 public class App {
 
 	public static void main(String[] args) {
-		
-		final String filename = String.format("test.ntw");
 
 		String directory = "MNISTdata/MNIST";
 		if (args.length > 0) {
@@ -44,8 +44,10 @@ public class App {
 		int inputSize = metaData.getInputSize();
 		int outputSize = metaData.getExpectedSize();
 		trainLoader.close();
-		
-		
+
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter the name of your network, if the file cannot be found a new network will be created:");
+		final String filename = scan.nextLine()+".ntw";
 				
 		NeuralNetwork neuralNetwork = NeuralNetwork.load(filename);
 				
@@ -66,7 +68,6 @@ public class App {
 			neuralNetwork.setScaleInitalWeights(scaleInitialWeights);
 
 			//NETWORK ARCHITECTURE SETTINGS - determined dynamically upon program run
-			Scanner scan = new Scanner(System.in);
 			String line = "";
 			System.out.println("Do you want to use a default network architecture? (Y/N)");
 			line = scan.nextLine();
@@ -121,14 +122,28 @@ public class App {
 		}
 		else {
 			System.out.println("Loaded from "+filename);
+			String line = "";
+			System.out.println("Do you want to train this loaded network further? (Y/N)");
+			line = scan.nextLine();
+			while(!line.equals("Y") && !line.equals("N")) {
+				System.out.println("Must enter Y or N. Do you want to use a default network architecture?");
+				line = scan.nextLine();
+			}
+			if (line.equals("N")) {
+				System.out.println("Writing images to files...");
+				new ImageWriter().run(directory, filename);
+				return;
+			}
 		}
-		
+
+		//for newly generated network
 		System.out.println(neuralNetwork);
-		
 		neuralNetwork.fit(trainLoader, testLoader);
-		
 		neuralNetwork.save(filename);
-		
+		System.out.println("Writing images to files...");
+		new ImageWriter().run(directory, filename);
+
+		//debug code
 		/**
 		StringBuilder sb = new StringBuilder().append(String.format("%s: 100EpochLoss: %.3f - 100EpochPC: %.2f \n", filename, neuralNetwork.getLoss(), neuralNetwork.getPercentCorrect()));
 		try {
@@ -136,7 +151,6 @@ public class App {
 			fw.write(sb.toString());
 			fw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

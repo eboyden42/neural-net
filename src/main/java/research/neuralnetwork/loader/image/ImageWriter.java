@@ -17,21 +17,21 @@ import research.neuralnetwork.loader.MetaData;
 public class ImageWriter {
 
 	public static void main(String[] args) {
-		
-		if (args.length == 0) {
-			System.out.println("usage: [app] <MNIST DATA DIRECTORY>");
-			return;
-		}
 
-		String directory = args[0];
+		String directory = "MNISTdata/MNIST";
+		
+		if (args.length > 0) {
+			directory = args[0];
+		}
 		
 		if (!new File(directory).isDirectory()) {
 			System.out.println("'"+directory+"'"+" is not a directory");
 			return;
 		}
+
+		String name = "mnistNeural45.ntw";
 		
-		
-		new ImageWriter().run(directory);
+		new ImageWriter().run(directory, name);
 		
 	}
 	
@@ -49,7 +49,7 @@ public class ImageWriter {
 		return maxIndex;	
 	}
 
-	public void run(String directory) {
+	public void run(String directory, String networkName) {
 		
 		System.out.println(directory);
 		
@@ -58,17 +58,16 @@ public class ImageWriter {
 		final String testImages = String.format("%s%s%s", directory, File.separator, "t10k-images-idx3-ubyte");
 		final String testLabels = String.format("%s%s%s", directory, File.separator, "t10k-labels-idx1-ubyte");
 		
-		int batchSize = 900;
+		int batchSize = 900; //number of numbers written
 		
 		ImageLoader trainLoader = new ImageLoader(trainImages, trainLabels, batchSize);
 		ImageLoader testLoader = new ImageLoader(testImages, testLabels, batchSize);
-		
-		
+
 		ImageLoader loader = testLoader;
 		
 		ImageMetaData metaData = loader.open();
 		
-		NeuralNetwork nn = NeuralNetwork.load("mnistNeural45.ntw");
+		NeuralNetwork nn = NeuralNetwork.load(networkName);
 		
 		boolean createIndividualImages = false; //please keep this false it will create TONS of little jpgs if it is set to true
 		
