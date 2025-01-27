@@ -47,7 +47,10 @@ public class App {
 
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Enter the name of your network, if the file cannot be found a new network will be created:");
-		final String filename = scan.nextLine()+".ntw";
+		String filename = scan.nextLine();
+		if (!filename.contains(".ntw")) {
+			filename += ".ntw";
+		}
 				
 		NeuralNetwork neuralNetwork = NeuralNetwork.load(filename);
 				

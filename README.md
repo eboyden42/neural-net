@@ -2,13 +2,26 @@
 
 ## Author
 Eli Boyden, aqu4eb, eboyden42
-
-Complete while following course "Create a Neural Network in Java" by John Purcell
-
+Completed while following course "Create a Neural Network in Java" by John Purcell, added additional functionality afterwards
+https://www.udemy.com/course/neural-network-java
 
 ## To Run
 
-1) Clone the repositiory and navigate to App.java
-2) 
+1) Clone the repository and navigate to App.java
+2) Run the app and follow directions in the terminal to either create a new network or use an existing one
+3) New networks will automatically train and then generate images and predictions
+4) For existing networks you can decide if you want to train the network futher or continue 
+to image and prediction generation
+5) Images will be generated in the root directory as "network_nameX.jpg" where X is a number from 1 to 11
+6) If you generate images for the same network more than once the new images will be called "network_nameXY.jpg"
+where Y is a number to ensure no overwriting
+7) Images contain montages of handwritten digits where red digits were predicted incorrectly by the network
+8) The labelsX.txt files contain a table of numbers representing the true value of the handwritten digit 
+corresponding to their location in each image
+9) The predictionsX.txt files contain a table of numbers representing the network predicted value of the handwritten digit
+   corresponding to their location in each image
 
 ## Issues
+
+If network sizes become too large then the Loss may appear as NaN. This is not an issue in most cases, however,
+it is probably wise to end the program and try again with a smaller network.
