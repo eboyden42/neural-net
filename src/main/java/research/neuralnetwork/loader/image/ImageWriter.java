@@ -92,10 +92,10 @@ public class ImageWriter {
 			int canvasWidth = horizontalImages * imageWidth;
 			int canvasHeight = verticalImages * imageHeight;
 
-			String montagePath = String.format("montage%d.jpg", i);
+			String montagePath = String.format(networkName+"%d.jpg", i);
 			int count = 0;
 			while (new File(montagePath).exists()) {
-				montagePath = String.format("montage%d%d.jpg", i, count);
+				montagePath = String.format(networkName+"%d%d.jpg", i, count);
 				count ++;
 			}
 
