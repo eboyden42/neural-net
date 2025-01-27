@@ -58,7 +58,7 @@ public class ImageWriter {
 		final String testImages = String.format("%s%s%s", directory, File.separator, "t10k-images-idx3-ubyte");
 		final String testLabels = String.format("%s%s%s", directory, File.separator, "t10k-labels-idx1-ubyte");
 		
-		int batchSize = 900; //number of numbers written
+		int batchSize = 900; //number of digits written
 		
 		ImageLoader trainLoader = new ImageLoader(trainImages, trainLabels, batchSize);
 		ImageLoader testLoader = new ImageLoader(testImages, testLabels, batchSize);
@@ -91,8 +91,14 @@ public class ImageWriter {
 			
 			int canvasWidth = horizontalImages * imageWidth;
 			int canvasHeight = verticalImages * imageHeight;
-			
+
 			String montagePath = String.format("montage%d.jpg", i);
+			int count = 0;
+			while (new File(montagePath).exists()) {
+				montagePath = String.format("montage%d%d.jpg", i, count);
+				count ++;
+			}
+
 			System.out.println("Writing "+montagePath);
 			
 			var montage = new BufferedImage(canvasWidth, canvasHeight, BufferedImage.TYPE_INT_RGB);
