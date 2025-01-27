@@ -133,6 +133,9 @@ public class App {
 				line = scan.nextLine();
 			}
 			if (line.equals("N")) {
+				System.out.println(neuralNetwork);
+				System.out.println("Current Percent Correct: "+neuralNetwork.getPercentCorrect());
+				System.out.println();
 				System.out.println("Writing images to files...");
 				new ImageWriter().run(directory, filename);
 				return;

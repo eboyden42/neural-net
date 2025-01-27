@@ -97,7 +97,7 @@ public class ImageWriter {
 			String montagePath = String.format(networkName+"%d.jpg", i);
 			int count = 0;
 			while (new File(montagePath).exists()) {
-				montagePath = String.format(networkName+"%d|%d.jpg", i, count);
+				montagePath = String.format(networkName+"%d.%d.jpg", i, count);
 				count ++;
 			}
 
