@@ -129,7 +129,7 @@ public class App {
 			System.out.println("Do you want to train this loaded network further? (Y/N)");
 			line = scan.nextLine();
 			while(!line.equals("Y") && !line.equals("N")) {
-				System.out.println("Must enter Y or N. Do you want to use a default network architecture?");
+				System.out.println("Must enter Y or N. Do you want to train this loaded network further?");
 				line = scan.nextLine();
 			}
 			if (line.equals("N")) {
